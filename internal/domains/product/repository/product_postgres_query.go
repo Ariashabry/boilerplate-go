@@ -8,6 +8,7 @@ import (
 
 type ProductPostgresRepo interface {
 	GetAllProducts(ctx context.Context) ([]dto.Product, error)
+	GetProductByID(ctx context.Context, id int) (dto.Product, error)
 }
 
 func (repo *ProductRepositoryPostgresImpl) GetAllProducts(ctx context.Context) ([]dto.Product, error) {
@@ -19,4 +20,13 @@ func (repo *ProductRepositoryPostgresImpl) GetAllProducts(ctx context.Context) (
 		return nil, err
 	}
 	return products, nil
+}
+
+func (repo *ProductRepositoryPostgresImpl) GetProductByID(ctx context.Context, id int) (dto.Product, error) {
+	var product dto.Product
+	err := repo.DB.Read.Where("id = ?", id).First(&product).Error
+	if err != nil {
+		return dto.Product{}, err
+	}
+	return product, nil
 }

@@ -23,6 +23,7 @@ var configurations = wire.NewSet(
 
 // Wiring for persistences (infrastructure)
 var persistences = wire.NewSet(
+	infras.ProvideRedis,
 	infras.ProvidePostgresConn,
 )
 

@@ -88,11 +88,6 @@ func CreatePostgresConnection(name, username, password, host, port, dbName, time
 				sqlDB.SetMaxIdleConns(postgresMaxIdleConnection)
 				sqlDB.SetMaxOpenConns(postgresMaxOpenConnection)
 				sqlDB.SetConnMaxLifetime(postgresConnMaxLifetime)
-				log.WithFields(map[string]interface{}{
-					"maxIdle":     postgresMaxIdleConnection,
-					"maxOpen":     postgresMaxOpenConnection,
-					"maxLifetime": postgresConnMaxLifetime,
-				}).Info("Configured Postgres connection pool")
 			}
 
 			return db
