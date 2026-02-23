@@ -1,0 +1,97 @@
+definitions:
+  dto.Product:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      status:
+        type: string
+    type: object
+  response.BaseResponse:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data: {}
+      message:
+        example: Success
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  response.BaseResponseError:
+    properties:
+      code:
+        example: 500
+        type: integer
+      message:
+        example: Internal Server Error
+        type: string
+      success:
+        example: false
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /product/:
+    get:
+      consumes:
+      - application/json
+      description: Get All Data Product
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/dto.Product'
+                  type: array
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.BaseResponseError'
+      summary: Get Product
+      tags:
+      - Product
+  /product/:id:
+    get:
+      consumes:
+      - application/json
+      description: Get Product By Id
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.Product'
+              type: object
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/response.BaseResponseError'
+      summary: Get Product By Id
+      tags:
+      - Product
+swagger: "2.0"

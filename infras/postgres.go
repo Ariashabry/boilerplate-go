@@ -78,7 +78,7 @@ func CreatePostgresConnection(name, username, password, host, port, dbName, time
 				"host":   host,
 				"port":   port,
 				"dbName": dbName,
-			}).Info("Connected to Postgres database")
+			}).Info("🚀 Connected to Postgres database")
 
 			// Configure connection pool
 			sqlDB, err := db.DB()

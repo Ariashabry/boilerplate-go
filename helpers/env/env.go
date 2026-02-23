@@ -17,6 +17,7 @@ type Config struct {
 	AppURL      string `mapstructure:"APP_URL"`
 	AppHost     string `mapstructure:"APP_HOST"`
 	AppPort     int    `mapstructure:"APP_PORT"`
+	AppEnv      string `mapstructure:"APP_ENV"`
 
 	// ======================
 	// CORS
