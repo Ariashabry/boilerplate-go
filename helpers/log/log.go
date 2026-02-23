@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
 
@@ -40,4 +41,8 @@ func (a *AppLog) Close() {
 	if a.logFile != nil {
 		_ = a.logFile.Close()
 	}
+}
+
+func (a *AppLog) ErrorWithStack(err error) {
+	a.Errorf("%+v", errors.WithStack(err))
 }

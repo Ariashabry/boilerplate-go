@@ -31,7 +31,7 @@ func ProvideRedis(config *env.Config, log *applog.AppLog) *Redis {
 		"host":   config.CacheRedisPrimaryHost,
 		"port":   config.CacheRedisPrimaryPort,
 		"dbName": config.CacheRedisPrimaryDB,
-	}).Info("Connected to Redis successfully")
+	}).Info("🚀 Connected to Redis successfully")
 
 	return &Redis{
 		Client: client,
