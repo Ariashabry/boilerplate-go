@@ -26,7 +26,8 @@ func InitializeService(l *log.AppLog) *http.HTTP {
 	config := env.Get(l)
 	postgresConn := infras.ProvidePostgresConn(config, l)
 	productRepositoryPostgresImpl := repository.ProvideProductRepositoryPostgresImpl(postgresConn)
-	productServiceImpl := service.ProvideProductServiceImpl(productRepositoryPostgresImpl, l)
+	redis := infras.ProvideRedis(config, l)
+	productServiceImpl := service.ProvideProductServiceImpl(productRepositoryPostgresImpl, l, redis)
 	productHandler := product.ProvideProductHandler(productServiceImpl, l)
 	domainHandlers := http.DomainHandlers{
 		ProductHandler: productHandler,
@@ -51,7 +52,7 @@ func InitializeMigrations(l *log.AppLog) *migration.MigrationServiceImpl {
 var configurations = wire.NewSet(env.Get)
 
 // Wiring for persistences (infrastructure)
-var persistences = wire.NewSet(infras.ProvidePostgresConn)
+var persistences = wire.NewSet(infras.ProvideRedis, infras.ProvidePostgresConn)
 
 // Wiring for product domain
 var productDomain = wire.NewSet(service.ProvideProductServiceImpl, wire.Bind(new(service.ProductService), new(*service.ProductServiceImpl)), repository.ProvideProductRepositoryPostgresImpl, wire.Bind(new(repository.ProductRepositoryPostgres), new(*repository.ProductRepositoryPostgresImpl)))
